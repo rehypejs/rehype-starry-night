@@ -19,8 +19,8 @@
   ],
   "dependencies": {
     "@wooorm/starry-night": "^3.0.0",
-    "devlop": "^1.0.0",
-    "hast-util-select": "^6.0.0"
+    "hast-util-to-string": "^3.0.0",
+    "unist-util-visit-parents": "^6.0.0"
   },
   "devDependencies": {
     "@types/node": "^20.0.0",
