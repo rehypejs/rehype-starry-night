@@ -5,17 +5,15 @@ import test from 'node:test'
 import {common} from '@wooorm/starry-night'
 import sourceTsx from '@wooorm/starry-night/source.tsx'
 import rehypeParse from 'rehype-parse'
+import rehypeStarryNight from 'rehype-starry-night'
 import rehypeStringify from 'rehype-stringify'
 import {read, write} from 'to-vfile'
 import {unified} from 'unified'
 import {VFile} from 'vfile'
-import rehypeStarryNight from '../index.js'
-
-// To do: export map and import self.
 
 test('rehypeStarryNight', async function (t) {
   await t.test('should expose the public api', async function () {
-    assert.deepEqual(Object.keys(await import('../index.js')).sort(), [
+    assert.deepEqual(Object.keys(await import('rehype-starry-night')).sort(), [
       'default'
     ])
   })

@@ -1,28 +1,45 @@
 {
   "name": "rehype-starry-night",
-  "type": "module",
   "version": "1.0.2",
-  "description": "syntaxhighlight using starry-night",
-  "homepage": "https://github.com/y-nk/rehype-starry-night",
-  "keywords": [
-    "rehype",
-    "plugin",
-    "starry-night",
-    "syntax",
-    "hightlight"
-  ],
-  "author": "Julien Barbay <julien.barbay@gmail.com>",
+  "description": "rehype plugin to highlight code with `starry-night`",
   "license": "MIT",
+  "keywords": [
+    "hast",
+    "highlight",
+    "html",
+    "night",
+    "plugin",
+    "rehype",
+    "rehype-plugin",
+    "starry-night",
+    "starry",
+    "syntax",
+    "unified"
+  ],
   "repository": "rehypejs/rehype-starry-night",
-  "main": "index.js",
+  "bugs": "https://github.com/rehypejs/rehype-starry-night/issues",
+  "funding": {
+    "type": "opencollective",
+    "url": "https://opencollective.com/unified"
+  },
+  "author": "Julien Barbay <julien.barbay@gmail.com>",
+  "contributors": [
+    "Julien Barbay <julien.barbay@gmail.com>",
+    "Titus Wormer <tituswormer@gmail.com> (https://wooorm.com)"
+  ],
+  "sideEffects": false,
+  "type": "module",
+  "exports": "./index.js",
   "files": [
-    "./index.js"
+    "lib/",
+    "index.d.ts",
+    "index.js"
   ],
   "dependencies": {
+    "@types/hast": "^3.0.0",
     "@wooorm/starry-night": "^3.0.0",
     "hast-util-to-string": "^3.0.0",
     "levenshtein-edit-distance": "^3.0.0",
-    "remark-rehype": "^11.1.0",
     "unist-util-visit-parents": "^6.0.0",
     "vfile": "^6.0.0"
   },
@@ -44,6 +61,7 @@
   "scripts": {
     "build": "tsc --build --clean && tsc --build && type-coverage",
     "format": "remark . --frail --output --quiet && prettier . --log-level warn --write && xo --fix",
+    "prepack": "npm run build && npm run format",
     "test": "npm run build && npm run format && npm run test-coverage",
     "test-api": "node --conditions development test/index.js",
     "test-coverage": "c8 --100 --check-coverage --reporter lcov npm run test-api"
@@ -59,11 +77,7 @@
   "remarkConfig": {
     "plugins": [
       "remark-preset-wooorm",
-      "remark-api",
-      [
-        "remark-lint-no-html",
-        false
-      ]
+      "remark-api"
     ]
   },
   "typeCoverage": {
