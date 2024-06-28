@@ -17,11 +17,29 @@
   "files": [
     "./index.js"
   ],
-  "scripts": {
-    "deploy": "npm publish --access public"
-  },
   "dependencies": {
     "@wooorm/starry-night": "^1.5.0",
     "hast-util-select": "^5.0.4"
+  },
+  "devDependencies": {
+    "prettier": "^3.0.0",
+    "xo": "^0.58.0"
+  },
+  "scripts": {
+    "format": "prettier . --log-level warn --write && xo --fix"
+  },
+  "prettier": {
+    "bracketSpacing": false,
+    "singleQuote": true,
+    "semi": false,
+    "tabWidth": 2,
+    "trailingComma": "none",
+    "useTabs": false
+  },
+  "xo": {
+    "prettier": true,
+    "rules": {
+      "logical-assignment-operators": "off"
+    }
   }
 }

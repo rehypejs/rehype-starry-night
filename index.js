@@ -1,34 +1,35 @@
-import { selectAll } from "hast-util-select"
-import { createStarryNight, all } from '@wooorm/starry-night';
+import {selectAll} from 'hast-util-select'
+import {createStarryNight, all} from '@wooorm/starry-night'
 
-export default function rehypeStarryNight(args = {}) {
+export default function rehypeStarryNight(options = {}) {
   let factory = null
   let highlighter = null
 
-  const { grammars = all, ...options } = args
+  const {grammars = all, ...rest} = options
 
-  return async function transform(tree) {
+  return async function (tree) {
     if (!factory) {
-      factory = createStarryNight(grammars, options)
+      factory = createStarryNight(grammars, rest)
     }
-    
+
     if (!highlighter) {
       highlighter = await factory
     }
 
-    selectAll('code', tree)
-      .forEach(node => {
-        const { className = [] } = node.properties ?? {}
+    const nodes = selectAll('code', tree)
 
-        const lang = className.find(cx => cx?.startsWith('language-')) ?? ''
-        const scope = highlighter.flagToScope(lang.replace('language-', ''))
+    for (const node of nodes) {
+      const {className = []} = node.properties ?? {}
 
-        if (!scope) return
+      const lang = className.find((cx) => cx?.startsWith('language-')) ?? ''
+      const scope = highlighter.flagToScope(lang.replace('language-', ''))
 
-        const [child] = node.children ?? []
-        const { children = [] } = highlighter.highlight(child.value, scope) ?? {}
+      if (!scope) continue
 
-        if (children.length) node.children = children
-      })
+      const [child] = node.children ?? []
+      const {children = []} = highlighter.highlight(child.value, scope) ?? {}
+
+      if (children.length > 0) node.children = children
+    }
   }
 }
