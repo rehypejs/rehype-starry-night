@@ -20,7 +20,9 @@
   "dependencies": {
     "@wooorm/starry-night": "^3.0.0",
     "hast-util-to-string": "^3.0.0",
-    "unist-util-visit-parents": "^6.0.0"
+    "levenshtein-edit-distance": "^3.0.0",
+    "unist-util-visit-parents": "^6.0.0",
+    "vfile": "^6.0.0"
   },
   "devDependencies": {
     "@types/node": "^20.0.0",
@@ -32,7 +34,6 @@
     "type-coverage": "^2.0.0",
     "typescript": "^5.0.0",
     "unified": "^11.0.0",
-    "vfile": "^6.0.0",
     "xo": "^0.58.0"
   },
   "scripts": {

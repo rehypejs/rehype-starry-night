@@ -2,6 +2,8 @@ import assert from 'node:assert/strict'
 import fs from 'node:fs/promises'
 import process from 'node:process'
 import test from 'node:test'
+import {common} from '@wooorm/starry-night'
+import sourceTsx from '@wooorm/starry-night/source.tsx'
 import rehypeParse from 'rehype-parse'
 import rehypeStringify from 'rehype-stringify'
 import {read, write} from 'to-vfile'
@@ -41,6 +43,22 @@ alert(hi)
     )
     assert.deepEqual(file.messages.map(String), [])
   })
+
+  await t.test('should warn for unregistered languages', async function () {
+    const file = await unified()
+      .use(rehypeParse, {fragment: true})
+      .use(rehypeStarryNight)
+      .use(rehypeStringify)
+      .process('<pre><code class="language-hypescript"></code></pre>')
+
+    assert.equal(
+      String(file),
+      '<pre><code class="language-hypescript"></code></pre>'
+    )
+    assert.deepEqual(file.messages.map(String), [
+      '1:6-1:47: Unexpected unknown language `hypescript` defined with `language-` class, expected a known name; did you mean `typescript` or `cakescript`'
+    ])
+  })
 })
 
 test('fixtures', async function (t) {
@@ -56,7 +74,7 @@ test('fixtures', async function (t) {
       const input = await read(new URL('input.html', folderUrl))
       const processor = await unified()
         .use(rehypeParse, {fragment: true})
-        .use(rehypeStarryNight)
+        .use(rehypeStarryNight, {grammars: [...common, sourceTsx]})
         .use(rehypeStringify)
 
       await processor.process(input)
@@ -80,6 +98,12 @@ test('fixtures', async function (t) {
       }
 
       assert.equal(String(input), String(output))
+
+      // This has warnings, and that is expected.
+      if (folder === 'empty') {
+        return
+      }
+
       assert.deepEqual(input.messages.map(String), [])
     })
   }
