@@ -19,13 +19,17 @@
   ],
   "dependencies": {
     "@wooorm/starry-night": "^3.0.0",
+    "devlop": "^1.0.0",
     "hast-util-select": "^6.0.0"
   },
   "devDependencies": {
     "prettier": "^3.0.0",
+    "type-coverage": "^2.0.0",
+    "typescript": "^5.0.0",
     "xo": "^0.58.0"
   },
   "scripts": {
+    "build": "tsc --build --clean && tsc --build && type-coverage",
     "format": "prettier . --log-level warn --write && xo --fix"
   },
   "prettier": {
@@ -36,10 +40,38 @@
     "trailingComma": "none",
     "useTabs": false
   },
+  "typeCoverage": {
+    "atLeast": 100,
+    "detail": true,
+    "ignoreCatch": true,
+    "strict": true
+  },
   "xo": {
-    "prettier": true,
-    "rules": {
-      "logical-assignment-operators": "off"
-    }
+    "overrides": [
+      {
+        "files": [
+          "**/*.d.ts"
+        ],
+        "rules": {
+          "@typescript-eslint/array-type": [
+            "error",
+            {
+              "default": "generic"
+            }
+          ],
+          "@typescript-eslint/ban-types": [
+            "error",
+            {
+              "extendDefaults": true
+            }
+          ],
+          "@typescript-eslint/consistent-type-definitions": [
+            "error",
+            "interface"
+          ]
+        }
+      }
+    ],
+    "prettier": true
   }
 }
