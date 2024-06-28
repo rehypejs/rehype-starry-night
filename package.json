@@ -18,8 +18,8 @@
     "./index.js"
   ],
   "dependencies": {
-    "@wooorm/starry-night": "^1.5.0",
-    "hast-util-select": "^5.0.4"
+    "@wooorm/starry-night": "^3.0.0",
+    "hast-util-select": "^6.0.0"
   },
   "devDependencies": {
     "prettier": "^3.0.0",
