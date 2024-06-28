@@ -5,8 +5,8 @@ import type {Grammar, Options as StarryNightOptions} from '@wooorm/starry-night'
  */
 export interface Options extends StarryNightOptions {
   /**
-   * Grammars (default: `all` from `@wooorm/starry-night`).
+   * Grammars to support (default: `all`).
    */
-  // To do: `null`.
-  grammars?: ReadonlyArray<Grammar> | undefined
+  // To do: change to `common`.
+  grammars?: ReadonlyArray<Grammar> | null | undefined
 }
