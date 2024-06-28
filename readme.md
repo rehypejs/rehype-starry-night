@@ -64,14 +64,14 @@ npm install rehype-starry-night
 In Deno with [`esm.sh`][esmsh]:
 
 ```js
-import rehypeStarryNight from 'https://esm.sh/rehype-starry-night@1'
+import rehypeStarryNight from 'https://esm.sh/rehype-starry-night@2'
 ```
 
 In browsers with [`esm.sh`][esmsh]:
 
 ```html
 <script type="module">
-  import rehypeStarryNight from 'https://esm.sh/rehype-starry-night@1?bundle'
+  import rehypeStarryNight from 'https://esm.sh/rehype-starry-night@2?bundle'
 </script>
 ```
 
@@ -169,7 +169,7 @@ versions of Node.js.
 
 When we cut a new major release, we drop support for unmaintained versions of
 Node.
-This means we try to keep the current release line, `rehype-starry-night@1`,
+This means we try to keep the current release line, `rehype-starry-night@2`,
 compatible with Node.js 16.
 
 ## Security
