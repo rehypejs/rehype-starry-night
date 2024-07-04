@@ -135,6 +135,8 @@ Configuration for `rehype-starry-night`.
 
 * `grammars?` (`ReadonlyArray<Grammar> | null | undefined`)
   — grammars to support (default: `common`)
+* `plainText?` (`ReadonlyArray<string> | null | undefined`)
+  — list of language names to not highlight (default: `[]`)
 
 ### `rehypeStarryNight(options) (default)`
 

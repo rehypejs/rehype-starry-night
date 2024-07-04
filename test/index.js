@@ -57,6 +57,22 @@ alert(hi)
       '1:6-1:47: Unexpected unknown language `hypescript` defined with `language-` class, expected a known name; did you mean `typescript` or `cakescript`'
     ])
   })
+
+  await t.test('should ignore languages in `plainText`', async function () {
+    const file = await unified()
+      .use(rehypeParse, {fragment: true})
+      .use(rehypeStarryNight, {plainText: ['hypescript', 'javascript']})
+      .use(rehypeStringify)
+      .process(
+        '<pre><code class="language-javascript">"hi"</code></pre>\n<pre><code class="language-hypescript"></code></pre>'
+      )
+
+    assert.equal(
+      String(file),
+      '<pre><code class="language-javascript">"hi"</code></pre>\n<pre><code class="language-hypescript"></code></pre>'
+    )
+    assert.deepEqual(file.messages.map(String), [])
+  })
 })
 
 test('fixtures', async function (t) {

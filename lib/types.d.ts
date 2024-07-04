@@ -13,4 +13,8 @@ export interface Options extends StarryNightOptions {
    * Grammars to support (default: `common`).
    */
   grammars?: ReadonlyArray<Grammar> | null | undefined
+  /**
+   * List of language names to not highlight (default: `[]`).
+   */
+  plainText?: ReadonlyArray<string> | null | undefined
 }
