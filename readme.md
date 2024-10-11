@@ -133,6 +133,8 @@ Configuration for `rehype-starry-night`.
 
 ###### Fields
 
+* `allowMissingScopes?` (`boolean | null | undefined`)
+  — do not warn for missing scopes (default: `false`)
 * `grammars?` (`ReadonlyArray<Grammar> | null | undefined`)
   — grammars to support (default: `common`)
 * `plainText?` (`ReadonlyArray<string> | null | undefined`)

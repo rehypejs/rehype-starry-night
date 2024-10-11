@@ -10,6 +10,10 @@ export type DistanceTuple = [name: string, distance: number]
  */
 export interface Options extends StarryNightOptions {
   /**
+   * Do not warn for missing scopes (default: `false`).
+   */
+  allowMissingScopes?: boolean | null | undefined
+  /**
    * Grammars to support (default: `common`).
    */
   grammars?: ReadonlyArray<Grammar> | null | undefined

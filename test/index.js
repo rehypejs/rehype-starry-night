@@ -3,6 +3,8 @@ import fs from 'node:fs/promises'
 import process from 'node:process'
 import test from 'node:test'
 import {common} from '@wooorm/starry-night'
+import textXmlSvg from '@wooorm/starry-night/text.xml.svg'
+import sourceObjc from '@wooorm/starry-night/source.objc'
 import sourceTsx from '@wooorm/starry-night/source.tsx'
 import rehypeParse from 'rehype-parse'
 import rehypeStarryNight from 'rehype-starry-night'
@@ -73,6 +75,58 @@ alert(hi)
     )
     assert.deepEqual(file.messages.map(String), [])
   })
+
+  await t.test('should warn for missing scopes (1)', async function () {
+    const file = await unified()
+      .use(rehypeParse, {fragment: true})
+      .use(rehypeStarryNight, {grammars: [textXmlSvg]})
+      .use(rehypeStringify)
+      .process(
+        '<pre><code class="language-svg">&lt;svg>&lt;rect/>&lt;/svg></pre>'
+      )
+
+    assert.equal(
+      String(file),
+      '<pre><code class="language-svg">&#x3C;<span class="pl-ent">svg</span>>&#x3C;<span class="pl-ent">rect</span>/>&#x3C;/<span class="pl-ent">svg</span>></code></pre>'
+    )
+    assert.deepEqual(file.messages.map(String), [
+      '1:1-1:66: Unexpected missing scope likely needed for highlighting to work: `text.xml`'
+    ])
+  })
+
+  await t.test('should warn for missing scopes (2)', async function () {
+    const file = await unified()
+      .use(rehypeParse, {fragment: true})
+      .use(rehypeStarryNight, {grammars: [sourceObjc]})
+      .use(rehypeStringify)
+      .process(
+        '<pre><code class="language-objc">- (int)method:(int)i {\n  return [self square_root:i];\n}</pre>'
+      )
+
+    assert.equal(
+      String(file),
+      '<pre><code class="language-objc">- (int)method:(int)i {\n  return [<span class="pl-c1">self</span> <span class="pl-c1">square_root:</span>i];\n}</code></pre>'
+    )
+    assert.deepEqual(file.messages.map(String), [
+      '1:1-3:8: Unexpected missing scopes likely needed for highlighting to work: `source.c`, `source.c.platform`, `source.objc.platform`'
+    ])
+  })
+
+  await t.test(
+    'should not warn for missing scopes w/ `allowMissingScopes`',
+    async function () {
+      const file = await unified()
+        .use(rehypeParse, {fragment: true})
+        .use(rehypeStarryNight, {
+          allowMissingScopes: true,
+          grammars: [textXmlSvg, sourceObjc]
+        })
+        .use(rehypeStringify)
+        .process('')
+
+      assert.deepEqual(file.messages.map(String), [])
+    }
+  )
 })
 
 test('fixtures', async function (t) {
