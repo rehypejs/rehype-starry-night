@@ -1,6 +1,6 @@
 {
   "name": "rehype-starry-night",
-  "version": "2.1.0",
+  "version": "2.2.0",
   "description": "rehype plugin to highlight code with `starry-night`",
   "license": "MIT",
   "keywords": [
